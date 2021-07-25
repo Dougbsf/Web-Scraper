@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row mb-4">
-        <h1 class="col-12 text-center">Lista dos carros</h1>
+        <h1 class="col-12 text-center">Lista de carros</h1>
         <p class="col-12 text-center">Lista com os carros cadastrados em nosso banco de dados, aqui também podemos excluí-los</p>
     </div>
 
