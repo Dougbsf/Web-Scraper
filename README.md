@@ -18,15 +18,19 @@ Primeiramente é necessário clonar o projeto, para isso execute o seguinte coma
 Após isso abra o terminal e navegue até a pasta onde o projeto foi clonado e execute os comandos abaixo:
 
 >composer update
+
 Atualiza as dependencias do composer
 
 >php artisan key:generate
+
 Gera uma chave aleatória para criptografar a cpnexão
 
 >npm install
+
 Instala as dependências visuais
 
 >npm run dev
+
 Atualiza o css utilizando o Mix
 
 Crie uma cópia do arquivo .env.example e renomeie para .env, dentro deste arquivo será necessário
