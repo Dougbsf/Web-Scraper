@@ -1,6 +1,6 @@
 # Web Scraper com Laravel
 O intuito deste projeto é armazenar os dados obtidos da url: https://www.questmultimarcas.com.br/estoque 
-e armazena-las de forma organizada dentro de um banco de dados relacional.
+e armazená-las de forma organizada dentro de um banco de dados relacional.
 
 Para recolher os dados da página foi utilizado o REGEX e os mesmos foram armazenados no banco de dados através de queries SQL.
 # Requisitos
@@ -19,7 +19,7 @@ Após isso abra o terminal e navegue até a pasta onde o projeto foi clonado e e
 
 >composer update
 
-(Atualiza as dependencias do composer)
+(Atualiza as dependências do composer)
 
 
 >npm install
@@ -57,7 +57,7 @@ Após a inicialização do sistema você será direcionado para a tela de login:
 Aqui podemos realizar login com o usuário padrão:
 > Usuário: admin@admin.com | Senha: admin
 
-Ou você criar um novo usuário a partir da tela de registro, no canto superior direito:
+Ou você pode criar um novo usuário a partir da tela de registro, no canto superior direito:
 
 ![Imagem da tela de registro](docs/imgs/registro.jpg?raw=true)
 
@@ -69,24 +69,24 @@ Na página de captura é onde realizamos a busca e armazenamento dos dados:
 
 ![Imagem da tela de captura](docs/imgs/captura.jpg?raw=true)
 
-Temos um capo de texto para realizar uma busca específica e o botão de captura, que irá
-solicitar uma requisição AJAX para o Controller de captura, onde será feita uma requisição GET na
+Temos um campo de texto para realizar uma busca específica e o botão de captura, que irá
+realizar uma requisição AJAX para o Controller de captura, onde será feita uma requisição GET na
 url: https://www.questmultimarcas.com.br/estoque(?termo=valor digitado no campo de texto).
 
 Caso a pesquisa seja bem sucedida será retornada uma lista com os veículos encontrados, junto 
-com seus dados e seus status, os status podem ser: Inserido ou Atualizado, caso um veículo já 
+de seus dados e seu status, os status podem ser: Inserido ou Atualizado, caso um veículo já 
 esteja cadastrado no sistema seus valores são atualizados.
 
 ![Imagem da tela de captura com resultados](docs/imgs/captura2.jpg?raw=true)
 
 Esses dados agora estão cadastrados no nosso banco de dados e podem ser acessados 
-através da tela: Lista de Carros:
+através da tela: Lista de Carros
 
 ![Imagem da tela de lista de carros](docs/imgs/lista.jpg?raw=true)
 
 Aqui temos todos os veículos cadastrados no sistema, junto de suas especificações.
 
-Também é possível deletar os veículos da nossa base de dados:
+Para cada veículo temos um botão para a exclusão do mesmo:
 
 ![Imagem da tela de lista de carros com delete](docs/imgs/lista2.jpg?raw=true)
 
