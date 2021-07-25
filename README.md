@@ -19,24 +19,25 @@ Após isso abra o terminal e navegue até a pasta onde o projeto foi clonado e e
 
 >composer update
 
-Atualiza as dependencias do composer
+(Atualiza as dependencias do composer)
 
->php artisan key:generate
-
-Gera uma chave aleatória para criptografar a cpnexão
 
 >npm install
 
-Instala as dependências visuais
+(Instala as dependências visuais)
 
 >npm run dev
 
-Atualiza o css utilizando o Mix
+(Atualiza o css utilizando o Mix)
 
-Crie uma cópia do arquivo .env.example e renomeie para .env, dentro deste arquivo será necessário
+Após isso crie uma cópia do arquivo .env.example e renomeie para .env, dentro deste arquivo será necessário
 adicionar as credenciais do seu banco de dados, os seguintes campos devem ser preenchidos:
 
 > DB_CONNECTION | DB_HOST | DB_PORT | DB_DATABASE | DB_USERNAME | DB_PASSWORD
+
+Também será necessário gerar a chave de criptografia:
+
+>php artisan key:generate
 
 Após isso podemos executar as migrações, utilize o comando abaixo para criar as tabelas no banco de dados:
 
