@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Faker\Core\Number;
 use Illuminate\Support\Facades\DB;
+use Session;
 
 class CarListController extends Controller
 {
@@ -33,11 +34,13 @@ class CarListController extends Controller
 
             DB::delete('delete from cars where id = ?', [$id]);
 
-            return redirect()->back()->with('msg','Veículo com o id: ' . $id .' deletado com sucesso!');
+            Session::flash('msg','Veículo com o id: ' . $id .' deletado com sucesso!');
+            return true;
 
         }catch (\Exception $e){
-
-            return redirect()->back()->with('error','Houve um problema ao deletar o veículo.');
+            
+            Session::flash('error','Houve um problema ao deletar o veículo.');
+            return false;
         }
     }
 

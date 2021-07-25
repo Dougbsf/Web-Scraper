@@ -40,15 +40,15 @@ class DataCaptureController extends Controller
         $defined_car_list = [];
 
         foreach ($car_list as $key => $value) {
-            array_push($defined_car_list, $this->organizeCarData($value));
+            array_push($defined_car_list, $this->setupCarData($value));
         }
 
-        return $this->saveDataToDb($defined_car_list);
+        return $this->saveToDatabase($defined_car_list);
 
     }
 
 
-    private function organizeCarData(string $car_data){
+    private function setupCarData(string $car_data){
         $name_pattern = '/<h2 .*?"><a .*?>([\s\S]*?)<\/a/';
         $link_pattern = '/<h2 .*?"><a href="([\s\S]*?)">/';
         $year_pattern = '/<span class=".*?">\s*Ano: <\/span>\s*<span .*?>\s*([0-9]*)<\/span>/';
@@ -77,19 +77,19 @@ class DataCaptureController extends Controller
         preg_match_all($color_pattern, $car_data, $color_data);
 
         return array(
-            'nome_veiculo'=> $name_data[1][0],
-            'link'=> $link_data[1][0],
-            'ano'=> $year_data[1][0],
-            'combustivel'=> $fuel_data[1][0],
-            'portas'=> $doors_data[1][0],
-            'quilometragem'=> str_replace('.','',$km_data[1][0]),
-            'cambio'=> $gearbox_data[1][0],
-            'cor'=> $color_data[1][0]
+            'nome_veiculo'=> $name_data ? $name_data[1][0] : '',
+            'link'=> $link_data ? $link_data[1][0] : '',
+            'ano'=> $year_data ? $year_data[1][0] : 0,
+            'combustivel'=> $fuel_data ? $fuel_data[1][0] : '',
+            'portas'=> $doors_data ? $doors_data[1][0] : 0,
+            'quilometragem'=> $km_data ? str_replace('.','',$km_data[1][0]) : 0,
+            'cambio'=> $gearbox_data ? $gearbox_data[1][0] : '',
+            'cor'=> $color_data ? $color_data[1][0] : ''
         );
     }
 
 
-    private function saveDataToDb(array $car_list){
+    private function saveToDatabase(array $car_list){
         $user = Auth::user();
 
         $inserts = 0;
@@ -102,10 +102,13 @@ class DataCaptureController extends Controller
                 $car_exists = DB::select('select id,link from cars where link = :link', ['link' => $car['link']]);
 
                 if(empty($car_exists)){
+
                     DB::insert('
-                    insert into cars (nome_veiculo, link, ano, combustivel, portas, quilometragem, cambio, cor, user_id)
-                    values (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                    [$car['nome_veiculo'], $car['link'], $car['ano'], $car['combustivel'], $car['portas'], $car['quilometragem'], $car['cambio'], $car['cor'], $user['id']]);
+                    insert into cars (nome_veiculo, link, ano, combustivel, portas, quilometragem, cambio, cor, user_id, created_at, updated_at)
+                    values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                    [$car['nome_veiculo'], $car['link'], $car['ano'], $car['combustivel'], 
+                     $car['portas'], $car['quilometragem'], $car['cambio'], $car['cor'], $user['id'],
+                     \Carbon\Carbon::now(), \Carbon\Carbon::now()]);
 
                     $car_list[$key]['status'] = 'Inserido';
 
@@ -115,7 +118,8 @@ class DataCaptureController extends Controller
 
                     $carId = $car_exists[0]->id;
 
-                    DB::update('update cars set nome_veiculo = ?, ano = ?, combustivel = ?, portas = ?, quilometragem = ?, cambio = ?, cor = ? where id = ?', [$car['nome_veiculo'], $car['ano'], $car['combustivel'], $car['portas'], $car['quilometragem'], $car['cambio'], $car['cor'], $carId]);
+                    DB::update('update cars set nome_veiculo = ?, ano = ?, combustivel = ?, portas = ?, quilometragem = ?, cambio = ?, cor = ?, updated_at = ? where id = ?'
+                    , [$car['nome_veiculo'], $car['ano'], $car['combustivel'], $car['portas'], $car['quilometragem'], $car['cambio'], $car['cor'], \Carbon\Carbon::now(), $carId]);
 
                     $car_list[$key]['status'] = 'Atualizado';
 

@@ -27,4 +27,4 @@ Route::get('/data-capture/capture/{termo?}', [App\Http\Controllers\DataCaptureCo
 
 Route::get('/car-list', [App\Http\Controllers\CarListController::class, 'index'])->name('car-list');
 
-Route::get('/car-list/deletar/{id?}', [App\Http\Controllers\CarListController::class, 'deleteCar'])->name('deleteCar');
+Route::delete('/car-list/deletar/{id?}', [App\Http\Controllers\CarListController::class, 'deleteCar'])->name('deleteCar');

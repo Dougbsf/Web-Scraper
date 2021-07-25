@@ -24,7 +24,7 @@
     @endif
 
     @if(!empty($cars))
-    <table class="table">
+    <table class="table table-striped">
         <thead>
           <tr>
             <th scope="col">id</th>
@@ -61,10 +61,25 @@
 <script>
 
 function deleteCar(car){
-    console.log(car);
+
     if(confirm(`Tem certeza de que deseja deletar o veículo: ${car.nome_veiculo} ?`)){
-        location.href = `{{route('deleteCar')}}/${car.car_id}`;
+
+        var url = '{{route('deleteCar')}}/'+car.car_id;
+        $.ajax({
+            type: "DELETE",
+            url: url,
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            success: function(data,status){
+                location.reload();
+            },
+            error: function(error){
+                console.log(error)
+            }
+        });
+
     }
+
+
 }
 
 </script>
